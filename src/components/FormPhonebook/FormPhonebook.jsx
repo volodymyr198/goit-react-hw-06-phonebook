@@ -1,14 +1,19 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
-
-import css from './FormPhonebook.module.css';
+// import { PropTypes } from 'prop-types';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-const FormPhonebook = ({ onSubmit }) => {
+import { addContact } from 'redux/contactsSlice';
+import { useDispatch } from 'react-redux';
+
+import css from './FormPhonebook.module.css';
+
+const FormPhonebook = () => {
+    const dispatch = useDispatch();
     const handleSubmit = (values, { resetForm }) => {
-        onSubmit(values);
+        dispatch(addContact(values));
+        // onSubmit(values);
         resetForm();
     };
 
@@ -76,8 +81,8 @@ const FormPhonebook = ({ onSubmit }) => {
     );
 };
 
-FormPhonebook.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-};
+// FormPhonebook.propTypes = {
+//     onSubmit: PropTypes.func.isRequired,
+// };
 
 export default FormPhonebook;

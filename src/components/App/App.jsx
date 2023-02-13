@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 
 import FormPhonebook from '../FormPhonebook/FormPhonebook';
 import ContactList from '../ContactList';
@@ -23,18 +23,18 @@ const App = () => {
         window.localStorage.setItem('contacts', JSON.stringify(contacts));
     }, [contacts]);
 
-    const addContactForm = ({ name, number }) => {
-        if (
-            contacts.find(
-                contact => contact.name.toLowerCase() === name.toLowerCase()
-            )
-        ) {
-            alert(`${name} is already in contacts`);
-            return;
-        }
+    // const addContactForm = ({ name, number }) => {
+    //     if (
+    //         contacts.find(
+    //             contact => contact.name.toLowerCase() === name.toLowerCase()
+    //         )
+    //     ) {
+    //         alert(`${name} is already in contacts`);
+    //         return;
+    //     }
 
-        setContacts(contacts => [{ id: nanoid(), name, number }, ...contacts]);
-    };
+    //     setContacts(contacts => [{ id: nanoid(), name, number }, ...contacts]);
+    // };
 
     const deleteContact = idx => {
         setContacts(contacts.filter((_, index) => index !== idx));
@@ -54,7 +54,7 @@ const App = () => {
     return (
         <div className={css.wrapper}>
             <h1 className={css.titlePhone}>Phonebook</h1>
-            <FormPhonebook onSubmit={addContactForm} />
+            <FormPhonebook /* onSubmit={addContactForm} */ />
             <h2 className={css.titleCont}>Contacts</h2>
             <Filter value={filter} onChange={changeFilter} />
             <ContactList
