@@ -1,20 +1,27 @@
 import React from 'react';
-// import { PropTypes } from 'prop-types';
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { addContact } from 'redux/contactsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import css from './FormPhonebook.module.css';
 
 const FormPhonebook = () => {
+    const contacts = useSelector(state => {
+        const normalizedFilter = state.filter.toLowerCase();
+        return state.contacts.items.filter(contact =>
+            contact.name.toLowerCase().includes(normalizedFilter)
+        );
+    });
+
     const dispatch = useDispatch();
     const handleSubmit = (values, { resetForm }) => {
-        dispatch(addContact(values));
-        // onSubmit(values);
-        resetForm();
+        contacts.find(
+            contact => contact.name.toLowerCase() === values.name.toLowerCase()
+        )
+            ? alert(`${values.name} is already in contacts!`)
+            : dispatch(addContact(values)) && resetForm();
     };
 
     const validationSchema = Yup.object().shape({
@@ -80,9 +87,5 @@ const FormPhonebook = () => {
         </Formik>
     );
 };
-
-// FormPhonebook.propTypes = {
-//     onSubmit: PropTypes.func.isRequired,
-// };
 
 export default FormPhonebook;
