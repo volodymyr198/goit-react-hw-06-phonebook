@@ -1,19 +1,14 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
-import { addContact } from 'redux/contactsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { addContact } from 'redux/contactsSlice';
+import { getFilteredContacts } from 'redux/selectors';
 import css from './FormPhonebook.module.css';
 
 const FormPhonebook = () => {
-    const contacts = useSelector(state => {
-        const normalizedFilter = state.filter.toLowerCase();
-        return state.contacts.items.filter(contact =>
-            contact.name.toLowerCase().includes(normalizedFilter)
-        );
-    });
+    const contacts = useSelector(getFilteredContacts);
 
     const dispatch = useDispatch();
     const handleSubmit = (values, { resetForm }) => {
